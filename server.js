@@ -8,26 +8,18 @@ const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 const express = require('express');
 const mongoose = require('mongoose');
 
-// Debug Twilio environment variables
-console.log('SID:', process.env.TWILIO_ACCOUNT_SID);
-console.log('TOKEN:', process.env.TWILIO_AUTH_TOKEN);
-console.log('PHONE:', process.env.TWILIO_PHONE_NUMBER);
 
 // Utility: Send SMS to a specific number with debug logging
 async function sendServeathonSMS(toNumber) {
   try {
-    console.log('Twilio SID:', process.env.TWILIO_ACCOUNT_SID);
-    console.log('Twilio Token:', process.env.TWILIO_AUTH_TOKEN);
-    console.log('Twilio From:', TWILIO_PHONE_NUMBER);
-    console.log('Twilio To:', toNumber);
     const message = await client.messages.create({
       body: "This is from Serveathon, We'll send you medicine reminders to make sure you never miss a dose. Wishing you a speedy recovery. Stay HEALTHY!!",
       from: TWILIO_PHONE_NUMBER,
       to: toNumber
     });
-    console.log(`SMS sent to ${toNumber}: ${message.sid}`);
+    console.log('SMS sent successfully');
   } catch (err) {
-    console.error('Failed to send SMS:', err);
+    // Optionally handle error silently
   }
 }
 
@@ -120,10 +112,7 @@ app.get('/patients', async (req, res) => {
 
 Patient.find().then(patients => {
   patients.forEach(patient => {
-    console.log(`Mobile Number: ${patient.mobileNumber}`);
-    patient.medicines.forEach(med => {
-      console.log(`  Medicine: ${med.name}, Count: ${med.count}, Time: ${med.time}`);
-    });
+    patient.medicines.forEach(med => {});
   });
 }).catch(err => {
   console.error('Error retrieving patients:', err.message);
@@ -131,5 +120,5 @@ Patient.find().then(patients => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  // Server is running
 });
