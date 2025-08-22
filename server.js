@@ -13,9 +13,13 @@ console.log('SID:', process.env.TWILIO_ACCOUNT_SID);
 console.log('TOKEN:', process.env.TWILIO_AUTH_TOKEN);
 console.log('PHONE:', process.env.TWILIO_PHONE_NUMBER);
 
-// Utility: Send SMS to a specific number
+// Utility: Send SMS to a specific number with debug logging
 async function sendServeathonSMS(toNumber) {
   try {
+    console.log('Twilio SID:', process.env.TWILIO_ACCOUNT_SID);
+    console.log('Twilio Token:', process.env.TWILIO_AUTH_TOKEN);
+    console.log('Twilio From:', TWILIO_PHONE_NUMBER);
+    console.log('Twilio To:', toNumber);
     const message = await client.messages.create({
       body: "This is from Serveathon, We'll send you medicine reminders to make sure you never miss a dose. Wishing you a speedy recovery. Stay HEALTHY!!",
       from: TWILIO_PHONE_NUMBER,
@@ -23,7 +27,7 @@ async function sendServeathonSMS(toNumber) {
     });
     console.log(`SMS sent to ${toNumber}: ${message.sid}`);
   } catch (err) {
-    console.error(`Failed to send SMS: ${err.message}`);
+    console.error('Failed to send SMS:', err);
   }
 }
 
