@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Tracker - Clinic Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen py-8">
+    <div class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">Medicine Tracker</h1>
+            <p class="text-gray-600">Please fill in your medicine details</p>
+        </div>
+
+        <form class="space-y-6">
+            <!-- Mobile Number Field -->
+            <div>
+                <label for="mobile" class="block text-sm font-medium text-gray-700 mb-2">
+                    Mobile Number *
+                </label>
+                <input 
+                    type="tel" 
+                    id="mobile" 
+                    name="mobile" 
+                    required
+                    placeholder="Enter your mobile number"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+            </div>
+
+            <!-- Medicine Name Field -->
+            <div>
+                <label for="medicine" class="block text-sm font-medium text-gray-700 mb-2">
+                    Medicine Name *
+                </label>
+                <input 
+                    type="text" 
+                    id="medicine" 
+                    name="medicine" 
+                    required
+                    placeholder="Enter medicine name"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+            </div>
+
+            <!-- Medicine Count Field -->
+            <div>
+                <label for="count" class="block text-sm font-medium text-gray-700 mb-2">
+                    Number of Pills *
+                </label>
+                <input 
+                    type="number" 
+                    id="count" 
+                    name="count" 
+                    min="1"
+                    required
+                    placeholder="Enter number of pills"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+            </div>
+
+            <!-- Time Selection Field (Checkboxes) -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    When to take medicine *
+                </label>
+                <div class="flex gap-4">
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="time" value="morning" class="form-checkbox text-blue-600">
+                        <span class="ml-2">Morning</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="time" value="afternoon" class="form-checkbox text-blue-600">
+                        <span class="ml-2">Afternoon</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="time" value="night" class="form-checkbox text-blue-600">
+                        <span class="ml-2">Night</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button 
+                type="submit"
+                class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-200 font-medium"
+            >
+                Submit Medicine Details
+            </button>
+        </form>
+
+        <!-- Additional Info -->
+        <div class="mt-6 p-4 bg-blue-50 rounded-md">
+            <p class="text-sm text-blue-800">
+                <strong>Note:</strong> Please ensure all information is accurate. This will help us track your medicine intake properly.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Simple form validation and submission handling
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Basic validation
+            if (!data.mobile || !data.medicine || !data.count || !data.time) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Mobile number validation (basic)
+            const mobileRegex = /^[0-9]{10}$/;
+            if (!mobileRegex.test(data.mobile.replace(/\D/g, ''))) {
+                alert('Please enter a valid 10-digit mobile number.');
+                return;
+            }
+            
+            // Success message
+            alert(`Medicine details submitted successfully!\n\nMobile: ${data.mobile}\nMedicine: ${data.medicine}\nPills: ${data.count}\nTime: ${data.time.charAt(0).toUpperCase() + data.time.slice(1)}`);
+            
+            // Reset form
+            this.reset();
+        });
+    </script>
+</body>
+</html>
